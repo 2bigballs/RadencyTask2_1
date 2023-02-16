@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RadencyTask2_1.ReadFiles.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,7 +10,7 @@ namespace RadencyTask2_1.ReadFiles.Interfaces
     public interface IReadService
     {
         public string ExtensionType { get; }
-        Task ReadFiles(IEnumerable<string> files);
+        List<RawPaymentTransaction> ReadFiles(IEnumerable<string> files);
 
     }
 }
