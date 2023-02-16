@@ -7,6 +7,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using RadencyTask2_1.ReadFiles.Models;
 
 namespace RadencyTask2_1.ReadFiles.Services
 {
@@ -21,20 +22,21 @@ namespace RadencyTask2_1.ReadFiles.Services
             _appSettings = appSettings.Value;
         }
 
-        public void ReadFiles()
+        public List<RawPaymentTransaction> ReadFiles()
         {
+            List<RawPaymentTransaction> rawPaymentTransactions = new();
             var filesList = Directory.GetFiles(_appSettings.ToRead).GroupBy(x => Path.GetExtension(x));
             foreach (var file in filesList)
             {
-
                 var readService = _readFileCreator.CreateReadService(file.Key);
                 if (readService == null)
                 {
                     continue;
                 }
-                readService.ReadFiles(file);
-
+                var subRawPaymentTransactions = readService.ReadFiles(file);
+                rawPaymentTransactions.AddRange(subRawPaymentTransactions);
             }
+            return rawPaymentTransactions;
         }
 
 
