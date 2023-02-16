@@ -11,7 +11,7 @@ namespace RadencyTask2_1.ReadFiles.Services
     {
         public string ExtensionType => ".txt";
 
-        public async Task ReadFiles(IEnumerable<string> files)
+        public List<RawPaymentTransaction> ReadFiles(IEnumerable<string> files)
         {
             List<RawPaymentTransaction> rawPaymentTransactionList = new();
 
@@ -25,6 +25,7 @@ namespace RadencyTask2_1.ReadFiles.Services
                 rawPaymentTransactionList.AddRange(rawPaymentTransactions);
             }
 
+            return rawPaymentTransactionList;
         }
 
         private  List<RawPaymentTransaction> ConvertToPaymentTransaction(string[] stringArr)

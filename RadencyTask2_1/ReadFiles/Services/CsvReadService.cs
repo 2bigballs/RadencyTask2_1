@@ -13,42 +13,44 @@ namespace RadencyTask2_1.ReadFiles.Services
 {
     public class CsvReadService : ReadService, IReadService
     {
-        private readonly AppSettings _appSettings;
-        public CsvReadService(IOptions<AppSettings> appSettings)
-        {
-            _appSettings = appSettings.Value;
-        }
 
         public string ExtensionType => ".csv";
-        public Task ReadFiles(IEnumerable<string> files)
+        public List<RawPaymentTransaction> ReadFiles(IEnumerable<string> files)
         {
-
+            List<RawPaymentTransaction> allRawPaymentTransactionsFromFile = new();
             foreach (var file in files)
             {
-                using (TextFieldParser csvParser = new TextFieldParser(file))
-                {
-                    csvParser.CommentTokens = new string[] { "#" };
-                    csvParser.SetDelimiters(new string[] { "," });
-                    csvParser.HasFieldsEnclosedInQuotes = true;
-                    csvParser.TrimWhiteSpace = true;
-
-
-                    while (!csvParser.EndOfData)
-                    {
-                        var rawPaymentTransactionProperties = csvParser.ReadFields().ToList();
-                        if (csvParser.LineNumber == 2)
-                        {
-                            continue;
-                        }
-                        var address = rawPaymentTransactionProperties.ElementAtOrDefault(2);
-                        var rawPaymentTransaction = CreateRawPaymentTransaction(rawPaymentTransactionProperties, address);
-                    }
-                }
+                var rawPaymentTransactions = ConvertToPaymentTransaction(file);
+                allRawPaymentTransactionsFromFile.AddRange(rawPaymentTransactions);
             }
 
-            return Task.CompletedTask;
+            return allRawPaymentTransactionsFromFile;
         }
 
+        private List<RawPaymentTransaction> ConvertToPaymentTransaction(string file)
+        {
+            List<RawPaymentTransaction> rawPaymentTransactions = new();
+            using TextFieldParser csvParser = new TextFieldParser(file);
+            csvParser.CommentTokens = new string[] { "#" };
+            csvParser.SetDelimiters(new string[] { "," });
+            csvParser.HasFieldsEnclosedInQuotes = true;
+            csvParser.TrimWhiteSpace = true;
 
+            var numberLineOfHeader = 2;
+            while (!csvParser.EndOfData)
+            {
+                var rawPaymentTransactionProperties = csvParser.ReadFields().ToList();
+                if (csvParser.LineNumber == numberLineOfHeader)
+                {
+                    continue;
+                }
+
+                var address = rawPaymentTransactionProperties.ElementAtOrDefault(2);
+                var rawPaymentTransaction = CreateRawPaymentTransaction(rawPaymentTransactionProperties, address);
+                rawPaymentTransactions.Add(rawPaymentTransaction);
+            }
+
+            return rawPaymentTransactions;
+        }
     }
 }
