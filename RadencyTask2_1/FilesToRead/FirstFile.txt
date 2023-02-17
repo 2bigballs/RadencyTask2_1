@@ -1,1 +1,12 @@
-Luke Pan,, “Lviv, Gorodotska 120, 5”, 40.0, 2022-12-07
+John, Doe, “Lviv, Kleparivska 35, 4”, 500.0, 2022-27-01, 1234567, Water
+Mike, Wiksen, “Lviv, Kleparivska 40, 1”, 720.0, 2022-27-05, 7654321, Heat
+Nick, Potter, “Lviv, Gorodotska 120, 3”, 880.0, 2022-25-03, “3334444”, Parking
+Luke Pan,, “Lviv, Gorodotska 120, 5”, 40.0, 2022-12-07, 2222111, Gas
+Illia, Melnik, “Lviv, Kleparivska 35, 4”, 2500.0, 2023-27-01, 8765432, Water
+Vitalik, Kravets, “Lviv, Kleparivska 40, 1”, 2720.0, 2022-20-07, 7623621, Heat
+Nick, Bazilchuk, “Lviv, Gorodotska 120, 3”, 4880.0, 2021-22-07, 3678444, Parking
+Maks, Luchak, “Lviv, Gorodotska 120, 5”, 2340.0, 2021-23-01, 2456111, Gas
+Illia, Melnik, “Kyiv, Kleparivska 35, 4”, 2500.0, 2023-27-01, 8765432, Water
+Vitalik, Kravets, “Kyiv, Kleparivska 40, 1”, 2720.0, 2022-20-07, 7623621, Heat
+Nick, Bazilchuk, “Khmelnytskyi, Gorodotska 120, 3”, 4880.0, 2021-22-07, 3678444, Parking
+

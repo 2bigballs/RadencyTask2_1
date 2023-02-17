@@ -1,6 +1,5 @@
 ﻿using System.Globalization;
 using Microsoft.Extensions.Options;
-using RadencyTask2_1.Models;
 using RadencyTask2_1.PathConfig;
 using RadencyTask2_1.ReadFiles.Interfaces;
 using RadencyTask2_1.ReadFiles.Models;
@@ -34,6 +33,10 @@ namespace RadencyTask2_1.ReadFiles.Services
 
             foreach (var line in stringArr)
             {
+                if (string.IsNullOrWhiteSpace(line))
+                {
+                    continue;
+                }
                 var addressStartIndex = line.IndexOf("“", StringComparison.Ordinal);
                 var addressEndIndex = line.IndexOf("”", StringComparison.Ordinal);
                 var address = line.Substring(addressStartIndex + 1, addressEndIndex - addressStartIndex - 1);

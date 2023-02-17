@@ -1,5 +1,4 @@
 ﻿using Microsoft.Extensions.Options;
-using RadencyTask2_1.Models;
 using RadencyTask2_1.PathConfig;
 using System;
 using System.Collections.Generic;
@@ -38,10 +37,6 @@ namespace RadencyTask2_1.ReadFiles.Services
             }
             return rawPaymentTransactions;
         }
-
-
-
-
     }
 
 }

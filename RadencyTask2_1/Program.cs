@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using RadencyTask2_1.PathConfig;
+using RadencyTask2_1.PaymentTransactions;
 using RadencyTask2_1.ReadFiles;
 using RadencyTask2_1.ReadFiles.Interfaces;
 using RadencyTask2_1.ReadFiles.Services;
@@ -22,7 +23,8 @@ public class Program
             .AddSingleton<IReadService, TxtReadService>()
             .AddSingleton<IReadService, CsvReadService>()
             .AddSingleton<ReadFileCreator>()
-            .AddSingleton<ReadFileService>();
+            .AddSingleton<ReadFileService>()
+            .AddSingleton<PaymentTransactionService>();
 
 
         services.Configure<AppSettings>(config.GetSection(AppSettings.Key));
@@ -30,10 +32,11 @@ public class Program
 
         var builderServiceProvider = services.BuildServiceProvider();
 
-        var readService = builderServiceProvider.GetRequiredService<ReadFileService>();
+        var paymentTransactionService = builderServiceProvider.GetRequiredService<PaymentTransactionService>();
 
 
-        readService.ReadFiles();
+        var paymentTransactions = paymentTransactionService.GetPaymentTransaction();
+        paymentTransactionService.SummoryPaymentReport(paymentTransactions);
 
     }
 }
