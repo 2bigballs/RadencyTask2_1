@@ -6,7 +6,9 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using RadencyTask2_1.PaymentTransactions;
 using RadencyTask2_1.ReadFiles.Models;
+using RadencyTask2_1.SummoryReport.Services;
 
 namespace RadencyTask2_1.ReadFiles.Services
 {
@@ -14,17 +16,22 @@ namespace RadencyTask2_1.ReadFiles.Services
     {
         private readonly ReadFileCreator _readFileCreator;
         private readonly AppSettings _appSettings;
+        private readonly PaymentTransactionService _paymentTransactionService;
+        private readonly SummoryReportService _summoryReportService;
+   
 
-        public ReadFileService(ReadFileCreator readFileCreator, IOptions<AppSettings> appSettings)
+        public ReadFileService(ReadFileCreator readFileCreator, IOptions<AppSettings> appSettings, PaymentTransactionService paymentTransactionService, SummoryReportService summoryReportService)
         {
             _readFileCreator = readFileCreator;
+            _paymentTransactionService = paymentTransactionService;
+            _summoryReportService = summoryReportService;
             _appSettings = appSettings.Value;
         }
 
         //if nothing do, so we can manage this to Dictionary<string,List<>>
-        public List<RawPaymentTransaction> ReadFiles()
+        public void ReadFiles()
         {
-            List<RawPaymentTransaction> rawPaymentTransactions = new();
+
             var filesList = Directory.GetFiles(_appSettings.ToRead).GroupBy(x => Path.GetExtension(x));
             foreach (var file in filesList)
             {
@@ -33,11 +40,16 @@ namespace RadencyTask2_1.ReadFiles.Services
                 {
                     continue;
                 }
+                
                 var subRawPaymentTransactions = readService.ReadFiles(file);
-                rawPaymentTransactions.AddRange(subRawPaymentTransactions);
+                var getPaymentTransaction= _paymentTransactionService.GetPaymentTransaction(subRawPaymentTransactions);
+                var dataForReport=_summoryReportService.GetDataForReport(getPaymentTransaction);
+                _summoryReportService.Create(dataForReport);
+
             }
-            return rawPaymentTransactions;
         }
+
+        
     }
 
 }

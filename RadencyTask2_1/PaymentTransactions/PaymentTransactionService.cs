@@ -20,10 +20,10 @@ namespace RadencyTask2_1.PaymentTransactions
             _readFileService = readFileService;
         }
 
-        public List<PaymentTransaction> GetPaymentTransaction()
+        public List<PaymentTransaction> GetPaymentTransaction(List<RawPaymentTransaction> rawPaymentTransactions)
         {
 
-            var rawPaymentTransactions = _readFileService.ReadFiles();
+            
 
             var validRawPaymentTransactions = rawPaymentTransactions.Where(x => x.Validate()).ToList();
             //rawPaymentTransactions.Count-validRawPaymentTransactions.Count=count of error ------- realize THIS don't forget 

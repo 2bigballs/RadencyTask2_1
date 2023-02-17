@@ -8,7 +8,7 @@ namespace RadencyTask2_1.SummoryReport.Services
 {
     public class SummoryReportService
     {
-        public List<SummoryPayment> SummoryPaymentReport(List<PaymentTransaction> paymentTransactions)
+        public List<SummoryPayment> GetDataForReport(List<PaymentTransaction> paymentTransactions)
         {
             List<SummoryPayment> summoryPayments = new();
 
@@ -69,7 +69,7 @@ namespace RadencyTask2_1.SummoryReport.Services
             return players;
         }
 
-        public void CreateSummoryReport(List<SummoryPayment> SummoryPaymentReport)
+        public void Create(List<SummoryPayment> SummoryPaymentReport)
         {
             var jsonString = JsonSerializer.Serialize(SummoryPaymentReport);
             Console.WriteLine(jsonString);
