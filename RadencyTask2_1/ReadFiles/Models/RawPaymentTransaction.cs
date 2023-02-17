@@ -4,12 +4,13 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using RadencyTask2_1.PaymentTransactions.Services;
+using RadencyTask2_1.PaymentTransactions.Models;
 
 namespace RadencyTask2_1.ReadFiles.Models
 {
     public class RawPaymentTransaction
     {
+
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Address { get; set; }

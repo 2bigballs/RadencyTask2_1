@@ -10,7 +10,7 @@ namespace RadencyTask2_1.ReadFiles.Interfaces
     public interface IReadService
     {
         public string ExtensionType { get; }
-        List<RawPaymentTransaction> ReadFiles(IEnumerable<string> files);
+        List<RawPaymentTransaction> ReadFile(string files);
 
     }
 }

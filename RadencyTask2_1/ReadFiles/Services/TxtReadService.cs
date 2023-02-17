@@ -1,32 +1,28 @@
 ﻿using System.Globalization;
 using Microsoft.Extensions.Options;
+using RadencyTask2_1.Meta.Models;
 using RadencyTask2_1.PathConfig;
 using RadencyTask2_1.ReadFiles.Interfaces;
 using RadencyTask2_1.ReadFiles.Models;
 
 namespace RadencyTask2_1.ReadFiles.Services
 {
-    public class TxtReadService : ReadService, IReadService
+    public class TxtReadService : ReadServiceWithMeta, IReadService
     {
         public string ExtensionType => ".txt";
-
-        public List<RawPaymentTransaction> ReadFiles(IEnumerable<string> files)
+        public TxtReadService(MetaModel metaModel) : base(metaModel)
         {
-            List<RawPaymentTransaction> rawPaymentTransactionList = new();
-
-
-            foreach (var file in files)
-            {
-                var stringArr = File.ReadAllLines(file);
-
-                var rawPaymentTransactions = ConvertToPaymentTransaction(stringArr);
-
-                rawPaymentTransactionList.AddRange(rawPaymentTransactions);
-            }
-
-            return rawPaymentTransactionList;
         }
 
+        public List<RawPaymentTransaction> ReadFile(string file)
+        {
+            var stringArr = File.ReadAllLines(file);
+
+            var rawPaymentTransactions = ConvertToPaymentTransaction(stringArr);
+
+            return rawPaymentTransactions;
+        }
+         
         private  List<RawPaymentTransaction> ConvertToPaymentTransaction(string[] stringArr)
         {
             List<RawPaymentTransaction> rawPaymentTransactions = new();
@@ -39,17 +35,17 @@ namespace RadencyTask2_1.ReadFiles.Services
                 }
                 var addressStartIndex = line.IndexOf("“", StringComparison.Ordinal);
                 var addressEndIndex = line.IndexOf("”", StringComparison.Ordinal);
+                
                 var address = line.Substring(addressStartIndex + 1, addressEndIndex - addressStartIndex - 1);
                 var lineWithoutAddress = line.Replace($"“{address}”", "");
                 var paymentTransactionPropertyList = lineWithoutAddress.Split(",").ToList();
-
                 var rawPaymentTransaction = CreateRawPaymentTransaction(paymentTransactionPropertyList, address);
-
                 rawPaymentTransactions.Add(rawPaymentTransaction);
             }
 
             return rawPaymentTransactions;
         }
+
 
         
     }

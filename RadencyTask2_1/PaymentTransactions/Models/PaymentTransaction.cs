@@ -5,7 +5,7 @@ using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RadencyTask2_1.PaymentTransactions.Services
+namespace RadencyTask2_1.PaymentTransactions.Models
 {
     public class PaymentTransaction
     {

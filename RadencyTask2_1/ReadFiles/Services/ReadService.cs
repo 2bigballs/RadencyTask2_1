@@ -1,4 +1,5 @@
-﻿using RadencyTask2_1.ReadFiles.Models;
+﻿using RadencyTask2_1.Meta.Models;
+using RadencyTask2_1.ReadFiles.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,8 @@ namespace RadencyTask2_1.ReadFiles.Services
 {
     public abstract class ReadService
     {
-        protected RawPaymentTransaction CreateRawPaymentTransaction(List<string> paymentTransactionPropertyList, string address)
+        
+        protected virtual RawPaymentTransaction CreateRawPaymentTransaction(List<string> paymentTransactionPropertyList, string address)
         {
             RawPaymentTransaction rawPaymentTransaction = new();
             try

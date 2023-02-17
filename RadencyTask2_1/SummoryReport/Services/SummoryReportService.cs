@@ -1,13 +1,24 @@
-﻿using RadencyTask2_1.PaymentTransactions.Services;
+﻿using RadencyTask2_1.PaymentTransactions.Models;
 using RadencyTask2_1.SummoryReport.Models;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Microsoft.Extensions.Options;
+using RadencyTask2_1.Meta.Models;
+using RadencyTask2_1.PathConfig;
 
 
 namespace RadencyTask2_1.SummoryReport.Services
 {
     public class SummoryReportService
     {
+
+        private readonly AppSettings _appSettings;
+        private readonly MetaModel _metaModel;
+        public SummoryReportService(IOptions<AppSettings> appSettings, MetaModel metaModel)
+        {
+            _metaModel = metaModel;
+            _appSettings = appSettings.Value;
+        }
         public List<SummoryPayment> GetDataForReport(List<PaymentTransaction> paymentTransactions)
         {
             List<SummoryPayment> summoryPayments = new();
@@ -72,9 +83,17 @@ namespace RadencyTask2_1.SummoryReport.Services
         public void Create(List<SummoryPayment> SummoryPaymentReport)
         {
             var jsonString = JsonSerializer.Serialize(SummoryPaymentReport);
-            Console.WriteLine(jsonString);
-        }
 
+            var path = Path.Combine(_appSettings.ToWrite, DateTime.Now.ToShortDateString());
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
+
+            string jsonName = $"output{_metaModel.ParsedFiles}.json";
+            var pathJSON = Path.Combine(path, jsonName);
+            File.WriteAllText(pathJSON, jsonString);
+        }
 
     }
 }

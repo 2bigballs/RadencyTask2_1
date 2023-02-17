@@ -10,7 +10,7 @@
   <ItemGroup>
     <Folder Include="FilesToRead\" />
     <Folder Include="FileToWrite\" />
-    <Folder Include="PaymentTransactions\Models\" />
+    <Folder Include="FileToWrite\17.02.2023\" />
   </ItemGroup>
 
   <ItemGroup>

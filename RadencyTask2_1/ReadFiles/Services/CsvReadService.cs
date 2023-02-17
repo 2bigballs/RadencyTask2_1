@@ -7,23 +7,20 @@ using System.Globalization;
 using RadencyTask2_1.ReadFiles.Models;
 using Microsoft.VisualBasic.FileIO;
 using System;
+using RadencyTask2_1.Meta.Models;
 
 namespace RadencyTask2_1.ReadFiles.Services
 {
-    public class CsvReadService : ReadService, IReadService
+    public class CsvReadService : ReadServiceWithMeta, IReadService
     {
-
-        public string ExtensionType => ".csv";
-        public List<RawPaymentTransaction> ReadFiles(IEnumerable<string> files)
+        public CsvReadService(MetaModel metaModel) : base(metaModel)
         {
-            List<RawPaymentTransaction> allRawPaymentTransactionsFromFile = new();
-            foreach (var file in files)
-            {
-                var rawPaymentTransactions = ConvertToPaymentTransaction(file);
-                allRawPaymentTransactionsFromFile.AddRange(rawPaymentTransactions);
-            }
-
-            return allRawPaymentTransactionsFromFile;
+        }
+        public string ExtensionType => ".csv";
+        public List<RawPaymentTransaction> ReadFile(string file)
+        {
+            var rawPaymentTransactions = ConvertToPaymentTransaction(file);
+            return rawPaymentTransactions;
         }
 
         private List<RawPaymentTransaction> ConvertToPaymentTransaction(string file)
@@ -51,5 +48,7 @@ namespace RadencyTask2_1.ReadFiles.Services
 
             return rawPaymentTransactions;
         }
+
+
     }
 }
