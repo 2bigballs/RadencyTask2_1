@@ -1,12 +1,6 @@
-﻿using CsvHelper.Configuration;
-using CsvHelper;
-using Microsoft.Extensions.Options;
-using RadencyTask2_1.PathConfig;
-using RadencyTask2_1.ReadFiles.Interfaces;
-using System.Globalization;
+﻿using RadencyTask2_1.ReadFiles.Interfaces;
 using RadencyTask2_1.ReadFiles.Models;
 using Microsoft.VisualBasic.FileIO;
-using System;
 using RadencyTask2_1.Meta.Models;
 
 namespace RadencyTask2_1.ReadFiles.Services

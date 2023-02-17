@@ -1,17 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using RadencyTask2_1.PathConfig;
-using RadencyTask2_1.PaymentTransactions;
 using RadencyTask2_1.ReadFiles;
 using RadencyTask2_1.ReadFiles.Interfaces;
 using RadencyTask2_1.ReadFiles.Services;
 using RadencyTask2_1.SummoryReport.Services;
 using RadencyTask2_1.Meta.Models;
+using RadencyTask2_1.Meta.Services;
 using RadencyTask2_1.PaymentTransactions.Services;
 
 namespace RadencyTask2_1
@@ -45,6 +40,7 @@ namespace RadencyTask2_1
                 .AddSingleton<IPaymentTransactionService,PaymentTransactionWithMetaService>()
                 .AddSingleton<SummoryReportService>()
                 .AddSingleton<SystemWatcher>()
+                .AddSingleton<MetaService>()
                 .AddSingleton<DataProcessing>();
 
             services.Configure<AppSettings>(config.GetSection(AppSettings.Key));

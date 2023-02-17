@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.Json.Serialization;
-using System.Threading.Tasks;
+﻿using System.Text.Json.Serialization;
 using RadencyTask2_1.DateTypeJsonConventer;
 
 namespace RadencyTask2_1.SummoryReport.Models

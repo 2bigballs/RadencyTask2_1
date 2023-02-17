@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Globalization;
 using RadencyTask2_1.PaymentTransactions.Models;
 
 namespace RadencyTask2_1.ReadFiles.Models

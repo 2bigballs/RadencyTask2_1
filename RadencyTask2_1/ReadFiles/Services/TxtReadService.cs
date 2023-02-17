@@ -1,7 +1,4 @@
-﻿using System.Globalization;
-using Microsoft.Extensions.Options;
-using RadencyTask2_1.Meta.Models;
-using RadencyTask2_1.PathConfig;
+﻿using RadencyTask2_1.Meta.Models;
 using RadencyTask2_1.ReadFiles.Interfaces;
 using RadencyTask2_1.ReadFiles.Models;
 

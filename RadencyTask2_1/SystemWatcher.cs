@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Extensions.Options;
+﻿using Microsoft.Extensions.Options;
 using RadencyTask2_1.PathConfig;
 
 namespace RadencyTask2_1
@@ -21,7 +16,7 @@ namespace RadencyTask2_1
         {
             using var watcher = new FileSystemWatcher(_appSettings.ToRead);
 
-            watcher.Created+= OnCreated;
+            watcher.Created += OnCreated;
             watcher.EnableRaisingEvents = true;
 
             Console.WriteLine("Press enter to exit.");
@@ -30,7 +25,41 @@ namespace RadencyTask2_1
 
         private void OnCreated(object sender, FileSystemEventArgs e)
         {
-            _dataProcessing.Process(e.FullPath);
+           
+             Task.Run( async () => await ProcessFileWhenAvailable(e.FullPath));
+            
+        }
+        private bool IsFileLocked(FileInfo file)
+        {
+            FileStream stream = null;
+            try
+            {
+                stream = file.Open(FileMode.Open, FileAccess.Read, FileShare.None);
+            }
+            catch (IOException)
+            {
+                return true;
+            }
+            finally
+            {
+                if (stream != null)
+                    stream.Close();
+            }
+            return false;
+        }
+
+        private async Task ProcessFileWhenAvailable(string path)
+        {
+            await Task.Run( () =>
+            {
+                FileInfo fileInfo = new FileInfo(path);
+                while (IsFileLocked(fileInfo))
+                { }
+                _dataProcessing.Process(path);
+            });
+
+
+
         }
     }
 }

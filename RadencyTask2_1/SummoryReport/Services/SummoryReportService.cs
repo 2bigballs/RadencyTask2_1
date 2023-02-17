@@ -1,7 +1,6 @@
 ﻿using RadencyTask2_1.PaymentTransactions.Models;
 using RadencyTask2_1.SummoryReport.Models;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using Microsoft.Extensions.Options;
 using RadencyTask2_1.Meta.Models;
 using RadencyTask2_1.PathConfig;

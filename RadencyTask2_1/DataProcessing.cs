@@ -4,11 +4,6 @@ using RadencyTask2_1.PathConfig;
 using RadencyTask2_1.PaymentTransactions.Services;
 using RadencyTask2_1.ReadFiles;
 using RadencyTask2_1.SummoryReport.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RadencyTask2_1
 {
@@ -50,6 +45,7 @@ namespace RadencyTask2_1
                 var dataForReport = _summoryReportService.GetDataForReport(getPaymentTransaction);
                 _summoryReportService.Create(dataForReport);
                 _meta.ParsedFiles++;
+
                 _meta.ChangeErrorHandler -= addInvalidFile;
             }
         }

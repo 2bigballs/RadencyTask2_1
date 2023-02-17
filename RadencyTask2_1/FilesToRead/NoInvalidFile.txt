@@ -1,0 +1,4 @@
+Illia1, Melnik, “Lviv, Kleparivska 35, 4”, 2500.0, 2023-27-01, 4765567, Water
+Illia2, Melnik, “Lviv, Kleparivska 35, 4”, 7500.0, 2023-24-11, 8975432, Band
+Illia3, Melnik, “Lviv, Kleparivska 35, 4”, 8500.0, 2023-23-02, 3123432, Grand
+Illia4, Melnik, “Lviv, Kleparivska 35, 4”, 10500.0, 2023-27-11, 1265432, Water
