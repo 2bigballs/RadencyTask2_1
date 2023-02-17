@@ -5,7 +5,7 @@ using RadencyTask2_1.PaymentTransactions;
 using RadencyTask2_1.ReadFiles;
 using RadencyTask2_1.ReadFiles.Interfaces;
 using RadencyTask2_1.ReadFiles.Services;
-
+using RadencyTask2_1.SummoryReport.Services;
 
 public class Program
 {
@@ -24,7 +24,8 @@ public class Program
             .AddSingleton<IReadService, CsvReadService>()
             .AddSingleton<ReadFileCreator>()
             .AddSingleton<ReadFileService>()
-            .AddSingleton<PaymentTransactionService>();
+            .AddSingleton<PaymentTransactionService>()
+            .AddSingleton<SummoryReportService>();
 
 
         services.Configure<AppSettings>(config.GetSection(AppSettings.Key));
@@ -36,7 +37,12 @@ public class Program
 
 
         var paymentTransactions = paymentTransactionService.GetPaymentTransaction();
-        paymentTransactionService.SummoryPaymentReport(paymentTransactions);
+
+        var paymentSummoryReportService = builderServiceProvider.GetRequiredService<SummoryReportService>();
+
+        var getSummoryPaymentReport = paymentSummoryReportService.SummoryPaymentReport(paymentTransactions);
+
+        paymentSummoryReportService.CreateSummoryReport(getSummoryPaymentReport);
 
     }
 }

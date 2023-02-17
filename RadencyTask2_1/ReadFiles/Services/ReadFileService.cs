@@ -21,6 +21,7 @@ namespace RadencyTask2_1.ReadFiles.Services
             _appSettings = appSettings.Value;
         }
 
+        //if nothing do, so we can manage this to Dictionary<string,List<>>
         public List<RawPaymentTransaction> ReadFiles()
         {
             List<RawPaymentTransaction> rawPaymentTransactions = new();

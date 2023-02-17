@@ -10,5 +10,6 @@ namespace RadencyTask2_1.PathConfig
     {
         public static string Key = "PathToFolder";
         public string ToRead { get; set; }
+        public string ToWrite { get; set; }
     }
 }
