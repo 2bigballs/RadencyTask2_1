@@ -1,23 +1,48 @@
-﻿using Microsoft.Extensions.Options;
-using RadencyTask2_1.PathConfig;
-using RadencyTask2_1.ReadFiles.Interfaces;
+﻿using RadencyTask2_1.ReadFiles.Interfaces;
+using RadencyTask2_1.ReadFiles.Models;
+using Microsoft.VisualBasic.FileIO;
+using RadencyTask2_1.Meta.Models;
 
 namespace RadencyTask2_1.ReadFiles.Services
 {
-    public class CsvReadService : IReadService
+    public class CsvReadService : ReadServiceWithMeta, IReadService
     {
-        private readonly AppSettings _appSettings;
-        public CsvReadService(IOptions<AppSettings> appSettings)
+        public CsvReadService(MetaModel metaModel) : base(metaModel)
         {
-            _appSettings = appSettings.Value;
         }
-
         public string ExtensionType => ".csv";
-        public Task ReadFiles(IEnumerable<string> files)
+        public List<RawPaymentTransaction> ReadFile(string file)
         {
-            return Task.CompletedTask;
+            var rawPaymentTransactions = ConvertToPaymentTransaction(file);
+            return rawPaymentTransactions;
         }
 
-      
+        private List<RawPaymentTransaction> ConvertToPaymentTransaction(string file)
+        {
+            List<RawPaymentTransaction> rawPaymentTransactions = new();
+            using TextFieldParser csvParser = new TextFieldParser(file);
+            csvParser.CommentTokens = new string[] { "#" };
+            csvParser.SetDelimiters(new string[] { "," });
+            csvParser.HasFieldsEnclosedInQuotes = true;
+            csvParser.TrimWhiteSpace = true;
+
+            var numberLineOfHeader = 2;
+            while (!csvParser.EndOfData)
+            {
+                var rawPaymentTransactionProperties = csvParser.ReadFields().ToList();
+                if (csvParser.LineNumber == numberLineOfHeader)
+                {
+                    continue;
+                }
+
+                var address = rawPaymentTransactionProperties.ElementAtOrDefault(2);
+                var rawPaymentTransaction = CreateRawPaymentTransaction(rawPaymentTransactionProperties, address);
+                rawPaymentTransactions.Add(rawPaymentTransaction);
+            }
+
+            return rawPaymentTransactions;
+        }
+
+
     }
 }

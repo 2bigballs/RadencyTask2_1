@@ -1,0 +1,50 @@
+[
+  {
+    "City": "Lviv",
+    "Services": [
+      {
+        "Name": " Water",
+        "Payers": [
+          {
+            "Name": "Illia1 Melnik",
+            "Payment": 2500.0,
+            "Date": "2023-27-01",
+            "AccountNumber": 4765567
+          },
+          {
+            "Name": "Illia4 Melnik",
+            "Payment": 10500.0,
+            "Date": "2023-27-11",
+            "AccountNumber": 1265432
+          }
+        ],
+        "Total": 13000.0
+      },
+      {
+        "Name": " Band",
+        "Payers": [
+          {
+            "Name": "Illia2 Melnik",
+            "Payment": 7500.0,
+            "Date": "2023-24-11",
+            "AccountNumber": 8975432
+          }
+        ],
+        "Total": 7500.0
+      },
+      {
+        "Name": " Grand",
+        "Payers": [
+          {
+            "Name": "Illia3 Melnik",
+            "Payment": 8500.0,
+            "Date": "2023-23-02",
+            "AccountNumber": 3123432
+          }
+        ],
+        "Total": 8500.0
+      }
+    ],
+    "Total": 29000.0
+  }
+]

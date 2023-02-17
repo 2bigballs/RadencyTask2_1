@@ -1,39 +1,30 @@
-﻿using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
+using RadencyTask2_1;
+using RadencyTask2_1.Meta.Services;
 using RadencyTask2_1.PathConfig;
-using RadencyTask2_1.ReadFiles;
-using RadencyTask2_1.ReadFiles.Interfaces;
-using RadencyTask2_1.ReadFiles.Services;
 
 
 public class Program
 {
     public static void Main(string[] args)
     {
+        var startup = new Startup();
+        var builderServiceProvider = startup.Init();
 
-        var builder = new ConfigurationBuilder()
-            .SetBasePath(Directory.GetCurrentDirectory())
-            .AddJsonFile("appsettings.json", optional: false);
+        var systemWatcher = builderServiceProvider.GetRequiredService<SystemWatcher>();
+        var dataProcessing = builderServiceProvider.GetRequiredService<DataProcessing>();
+        var appSettings= builderServiceProvider.GetRequiredService<IOptions<AppSettings>>();
+        var metaService = builderServiceProvider.GetRequiredService<MetaService>();
 
-        IConfiguration config = builder.Build();
-
-        //setup our DI
-        var services = new ServiceCollection()
-            .AddSingleton<IReadService, TxtReadService>()
-            .AddSingleton<IReadService, CsvReadService>()
-            .AddSingleton<ReadFileCreator>()
-            .AddSingleton<ReadFileService>();
-
-
-        services.Configure<AppSettings>(config.GetSection(AppSettings.Key));
+        var filesList = Directory.GetFiles(appSettings.Value.ToRead);
+        dataProcessing.Process(filesList);
+        systemWatcher.ConfigurationWatcher();
+        metaService.Write();
 
 
-        var builderServiceProvider = services.BuildServiceProvider();
-
-        var readService = builderServiceProvider.GetRequiredService<ReadFileService>();
-
-
-        readService.ReadFiles();
 
     }
+
+   
 }

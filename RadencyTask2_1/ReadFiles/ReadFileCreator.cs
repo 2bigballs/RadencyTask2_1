@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using RadencyTask2_1.ReadFiles.Interfaces;
+﻿using RadencyTask2_1.ReadFiles.Interfaces;
 
 namespace RadencyTask2_1.ReadFiles
 {
